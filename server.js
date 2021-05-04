@@ -38,12 +38,12 @@ app.post('/reports', async (req, res) => {
         report.users.push(details.reportDetails.userID);      
         try {
             await report.save();
-            res.send({
+            res.status(200).send({
                 status:"success",
                 reportID: report._id,
             });
         } catch (error) {
-            res.send(error.message);
+            res.status(400).send(error.message);
         }
     }
     else{
@@ -59,12 +59,12 @@ app.post('/reports', async (req, res) => {
         
           try {
             await report.save();
-            res.send({
+            res.status(200).send({
                 status:"success",
                 reportID: report._id,
             });
         } catch (error) {
-            res.send(error.message);
+            res.status(400).send(error.message);
         }
     }
     
@@ -78,7 +78,7 @@ app.post('/reports', async (req, res) => {
     const id = req.query.reportID.replace( /[\r\n]+/gm, "");
     const reportDetails = await Report.findById(id);
     if(reportDetails){
-        res.send({
+        res.status(200).send({
             _id: id,
             marketID: reportDetails.marketID,
             marketName: reportDetails.marketName,
@@ -90,7 +90,9 @@ app.post('/reports', async (req, res) => {
             price: reportDetails.price
         });
     }else{
-        res.send("Required report not found");
+        res.status(400).send("Required report not found");
     }
     
   });
+
+  export default app ;
